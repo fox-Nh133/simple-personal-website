@@ -1,0 +1,74 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+
+# 権限設定:
+# contents: write -> 変更をリポジトリにコミットするために必要
+# pages: write, id-token: write -> GitHub Pagesへのデプロイに必要
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. チェックアウト
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Node.jsのセットアップ
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. 依存関係のインストール
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. work.html の生成（毎回実行）
+      - name: Generate work.html
+        run: node generate_work_html.js
+
+      # 5. 変更の検知とコミット＆プッシュ
+      - name: Commit and Push if changed
+        run: |
+          # Git設定
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # work.html をステージングエリアに追加
+          git add work.html
+          
+          # 差分があるかチェック
+          if git diff --cached --quiet; then
+            echo "No changes to work.html. Skipping commit."
+          else
+            echo "Changes detected. Committing and pushing..."
+            git commit -m "chore: update work.html [skip ci]"
+            git push
+          fi
+
+      # 6. GitHub Pages の設定 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 7. 成果物のアップロード 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: '.'
+
+      # 8. デプロイ 
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
