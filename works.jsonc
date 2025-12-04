@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Work title",
+    "description": "Work description",
+    "tags": ["technology", "code"],
+    "image": "/images/path.jpeg",
+    "links": [
+      { "label": "Project site", "url": "https://example.com" }
+    ]
+  }
+]
+
+// Work items configuration
+// Each object represents one prototype or product.
+// Fields: title, description, tags, image, links (array of label + url)
+
+/*
+Operational tips:
+- Keep all images in the same aspect ratio (e.g., 1200×800 / 3:2) for consistent spacing.
+- Use short, descriptive titles (under 60 characters).
+- Avoid excessive emojis or line breaks in description.
+- Use lowercase tags and limit to 3–5 per project.
+*/

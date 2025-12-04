@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Name</title>
+  <meta name="description" content="Your brief introduction" />
+  <!-- Favicon and app icons -->
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="title" />
+  <link rel="manifest" href="/favicon/site.webmanifest" />
+  <style>
+    /* --- Base --- */
+    :root {
+      --fg: #1a1a1a;
+      --muted: #5f6368;
+      --link: #1a1a1a;
+      --link-hover: #000000;
+      background: #fafafa;
+      --maxw: 46rem;   /* page content width */
+      --measure: 38ch; /* ideal text line length */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --fg: #eaeaea;
+        --muted: #9aa0a6;
+        --link: #eaeaea;
+        --link-hover: #ffffff;
+        background: #0d0f12;
+      }
+    }
+
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .photo {
+    margin: 2rem auto;
+    display: flex;
+    justify-content: center;
+    }
+
+    .photo img {
+    width: min(100%, 300px);
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    }
+
+    /* --- Layout --- */
+    .wrap {
+      max-width: var(--maxw);
+      padding: 4vh 6vw;
+    }
+
+    .intro { max-width: var(--measure); text-align: center; }
+
+    h1 {
+      font-size: clamp(1.75rem, 1.6rem + 1vw, 2.25rem);
+      line-height: 1.2;
+      margin: 0 0 0.5rem 0;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+    .role { margin: 0 0 0.25rem 0; font-weight: 600; }
+    .tagline { margin: 0 0 2rem 0; color: var(--fg); }
+
+    /* --- Links area --- */
+    .links, .contact { margin: 1.25rem 0 0 0; }
+    .section-title { color: var(--muted); margin: 1.5rem 0 0.25rem 0; }
+
+    a {
+      color: var(--link);
+      text-decoration: underline; /* always underlined */
+      text-underline-offset: 2px;
+    }
+    a:hover { color: var(--link-hover); }
+
+    .inline-list { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    a:focus { outline: 2px solid currentColor; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="intro" aria-label="Intro">
+      <h1>Your Name</h1>
+      <p class="role">lorem ipsum</p>
+      <p class="tagline">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+      <div class="photo">
+        <img src="./images/profile.jpg" alt="Landscape, Onomichi, Hiroshima" />
+     </div>
+
+      <nav class="links" aria-label="Primary">
+        <div class="inline-list">
+          <a href="https://www.example.com" target="_blank" rel="noopener">Blog</a>
+          <a href="work.html">Work</a>
+        </div>
+      </nav>
+
+      <div class="contact" aria-label="Contact">
+        <div class="section-title">Contact</div>
+        <div class="inline-list">
+          <a href="#" id="email-link">Email</a>
+          <a href="https://bsky.app/" target="_blank" rel="noopener">Bluesky</a>
+          <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const emailLink = document.getElementById("email-link");
+    let revealed = false;
+    emailLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      if (!revealed) {
+        this.textContent = "mail [at] your.domain";
+        this.removeAttribute("href");
+        this.style.cursor = "pointer";
+        revealed = true;
+      } else {
+        this.textContent = "Email";
+        this.setAttribute("href", "#");
+        this.style.cursor = "pointer";
+        revealed = false;
+      }
+    });
+  </script>
+</body>
+</html>
+
